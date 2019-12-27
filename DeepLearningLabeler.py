@@ -15,6 +15,9 @@ class manual_classifier(object):
     Input:
     The path of images that are mixed and that need to be classified into two classes.
 
+    Usage:
+    manualLabeler (str)/path/to/your/images
+
     author: Bin Wang
     email: alexwang911217@gmail.com"""
 
