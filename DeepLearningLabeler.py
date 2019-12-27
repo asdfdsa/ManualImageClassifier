@@ -21,8 +21,10 @@ class manual_classifier(object):
     author: Bin Wang
     email: alexwang911217@gmail.com"""
 
-    def __init__(self, path):
+    def __init__(self, path, name="*", folder=None):
         self.classified_path = Path(path)
+        self.particularName = name
+        self.particularFolder = folder
 
         self.img_enumerator = self.image_enumerator(path=self.classified_path)
 
@@ -33,10 +35,10 @@ class manual_classifier(object):
 
         self.fig = plt.figure()
         self.b1 = Button(self.fig.add_axes([0.05, 0.33, 0.1, 0.04]), 'Class 2')
-        self.b1.on_clicked(self.Classify_to_1)
+        self.b1.on_clicked(self.Classify_to_2)
 
         self.b2 = Button(self.fig.add_axes([0.05, 0.67, 0.1, 0.04]), 'Class 1')
-        self.b2.on_clicked(self.Classify_to_2)
+        self.b2.on_clicked(self.Classify_to_1)
 
         self.canvas = self.fig.add_axes([0.1, 0.1, 1, 1])
         self.canvas.get_xaxis().set_visible(False)
@@ -87,18 +89,22 @@ class manual_classifier(object):
     def plot_img(self, ax, imgarray):
         return ax.imshow(imgarray, vmin=imgarray.min(), vmax=imgarray.max())
 
-    def image_enumerator(self, path, iformat = "tiff"):
-        imagefiles = path.rglob("*.{}".format(iformat))
+    def image_enumerator(self, path, particularFolder = None, particularName="*", iformat = "tiff"):
+        particularFolder = self.particularFolder
+        particularName = self.particularName
+        print(f"{particularFolder}\\{particularName}.{iformat}")
+        imagefiles = path.rglob(f"{particularFolder}\\{particularName}.{iformat}")
         return enumerate(imagefiles)
 
 def main():
     try:
         path = Path(sys.argv[1])
+        pn = sys.argv[2]
+        pf = sys.argv[3]
     except IndexError:
         path = Path(r".\tiff_image")
-    
-    print(path)
-    manual_classifier(path)
+
+    manual_classifier(path, pn, pf)
 
 if __name__ == "__main__":
     main()
