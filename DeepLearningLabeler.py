@@ -40,13 +40,17 @@ class manual_classifier(object):
         self.class_2_path.mkdir(parents=True, exist_ok=True)
 
         self.fig = plt.figure()
-        self.b1 = Button(self.fig.add_axes([0.05, 0.33, 0.1, 0.04]), 'Class 2')
-        self.b1.on_clicked(self.Classify_to_2)
 
-        self.b2 = Button(self.fig.add_axes([0.05, 0.67, 0.1, 0.04]), 'Class 1')
-        self.b2.on_clicked(self.Classify_to_1)
+        self.b1 = Button(self.fig.add_axes([0, 0.75, 0.1, 0.04]), 'Class_1')
+        self.b1.on_clicked(self.Classify_to_1)
 
-        self.canvas = self.fig.add_axes([0.1, 0.1, 1, 1])
+        self.b2 = Button(self.fig.add_axes([0, 0.50, 0.1, 0.04]), 'Class_2')
+        self.b2.on_clicked(self.Classify_to_2)
+
+        self.b3 = Button(self.fig.add_axes([0, 0.25, 0.1, 0.04]), 'Skip')
+        self.b3.on_clicked(self.next_img)
+
+        self.canvas = self.fig.add_axes([0, 0, 1, 1])
         self.canvas.get_xaxis().set_visible(False)
         self.canvas.get_yaxis().set_visible(False)
 
@@ -57,7 +61,7 @@ class manual_classifier(object):
 
         plt.show()
 
-    def next(self):
+    def next_img(self, event=None):
         try:
             self.current_img_path = next(self.img_enumerator)[1]
             imgnew = self.read_img(self.current_img_path)
@@ -80,7 +84,7 @@ class manual_classifier(object):
             print(f"Image {self.current_img_path} has already been copied!")
             pass
         finally:
-            self.next()
+            self.next_img()
 
     def Classify_to_2(self, path):
         path = self.class_2_path / f"{self.now}_{self.ind}.{self.img_format}"
@@ -92,7 +96,7 @@ class manual_classifier(object):
             print(f"Image {self.current_img_path} has already been copied!")
             pass
         finally:
-            self.next()
+            self.next_img()
 
     def plot_img(self, ax, imgarray):
         return ax.imshow(imgarray, vmin=imgarray.min(), vmax=imgarray.max())
