@@ -1,8 +1,9 @@
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import shutil
 from PIL import Image
 from pathlib import Path
-import shutil
 from matplotlib.widgets import Button
 
 class manual_classifier(object):
@@ -28,10 +29,10 @@ class manual_classifier(object):
         self.class_2_path.mkdir(parents=True, exist_ok=True)
 
         self.fig = plt.figure()
-        self.b1 = Button(self.fig.add_axes([0.05, 0.33, 0.1, 0.04]), 'Class 1')
+        self.b1 = Button(self.fig.add_axes([0.05, 0.33, 0.1, 0.04]), 'Class 2')
         self.b1.on_clicked(self.Classify_to_1)
 
-        self.b2 = Button(self.fig.add_axes([0.05, 0.67, 0.1, 0.04]), 'Class 2')
+        self.b2 = Button(self.fig.add_axes([0.05, 0.67, 0.1, 0.04]), 'Class 1')
         self.b2.on_clicked(self.Classify_to_2)
 
         self.canvas = self.fig.add_axes([0.1, 0.1, 1, 1])
@@ -88,7 +89,12 @@ class manual_classifier(object):
         return enumerate(imagefiles)
 
 def main():
-    path = Path(r".\tiff_image")
+    try:
+        path = Path(sys.argv[1])
+    except IndexError:
+        path = Path(r".\tiff_image")
+    
+    print(path)
     manual_classifier(path)
 
 if __name__ == "__main__":
