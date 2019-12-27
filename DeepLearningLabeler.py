@@ -28,7 +28,7 @@ class manual_classifier(object):
         self.particularFolder = folder
         self.img_format = iformat
 
-        self.now = datetime.datetime.now.strftime("%H:%M:%S")
+        self.now = datetime.datetime.now().strftime("%H:%M:%S")
         self.ind = 0
 
         self.img_enumerator = self.image_enumerator(path=self.classified_path)
