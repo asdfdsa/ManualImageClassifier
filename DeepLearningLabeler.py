@@ -8,7 +8,8 @@ from matplotlib.widgets import Button
 class manual_classifier(object):
 
     """The class uses only matplotlib functions to realize a convenient manual classification for images
-    that sits in the same folder.
+    that sit in the specified folder. It will copy the images to the desired image class folder (e.g. 
+    class_1 and class_2)
 
     Input:
     The path of images that are mixed and that need to be classified into two classes.
