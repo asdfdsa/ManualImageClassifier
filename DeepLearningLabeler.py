@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import shutil
+import datetime
 from PIL import Image
 from pathlib import Path
 from matplotlib.widgets import Button
@@ -21,10 +22,14 @@ class manual_classifier(object):
     author: Bin Wang
     email: alexwang911217@gmail.com"""
 
-    def __init__(self, path, name="*", folder=None):
+    def __init__(self, path, name="*", folder="*", iformat="tiff"):
         self.classified_path = Path(path)
         self.particularName = name
         self.particularFolder = folder
+        self.img_format = iformat
+
+        self.now = datetime.datetime.now.strftime("%H:%M:%S")
+        self.ind = 0
 
         self.img_enumerator = self.image_enumerator(path=self.classified_path)
 
@@ -65,8 +70,9 @@ class manual_classifier(object):
         return np.array(Image.open(img_path))
 
     def Classify_to_1(self, path):
-        path = self.class_1_path
-        print("copying file to class 1...")
+        path = self.class_1_path / f"{self.now}_{self.ind}.{self.img_format}"
+        self.ind += 1
+        print(f"copying file to {path}...")
         try:
             shutil.copy(self.current_img_path, path)
         except shutil.SameFileError:
@@ -76,8 +82,9 @@ class manual_classifier(object):
             self.next()
 
     def Classify_to_2(self, path):
-        path = self.class_2_path
-        print("copying file to class 2...")
+        path = self.class_2_path / f"{self.now}_{self.ind}.{self.img_format}"
+        self.ind += 1
+        print(f"copying file to {path}...")
         try:
             shutil.copy(self.current_img_path, path)
         except shutil.SameFileError:
