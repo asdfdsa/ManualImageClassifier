@@ -29,6 +29,7 @@ class manual_classifier(object):
         self.img_format = iformat
 
         self.now = datetime.datetime.now().strftime("%H:%M:%S")
+        self.now.replace(":","_")
         self.ind = 0
 
         self.img_enumerator = self.image_enumerator(path=self.classified_path)
