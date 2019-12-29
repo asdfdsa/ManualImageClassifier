@@ -13,6 +13,8 @@ Usage:
 
     e.g. ManualLabeler C:\images
 
+![Main interface](tool.PNG)
+
 ## Requirements
 
  - Python3.7
