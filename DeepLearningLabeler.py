@@ -104,8 +104,12 @@ class manual_classifier(object):
     def image_enumerator(self, path, particularFolder = None, particularName="*", iformat = "tiff"):
         particularFolder = self.particularFolder
         particularName = self.particularName
-        print(f"{particularFolder}\\{particularName}.{iformat}")
-        imagefiles = path.rglob(f"{particularFolder}\\{particularName}.{iformat}")
+        if particularFolder == "*":
+            print(f"{particularName}.{iformat}")
+            imagefiles = path.rglob(f"{particularName}.{iformat}")
+        else:
+            print(f"{particularFolder}\\{particularName}.{iformat}")
+            imagefiles = path.rglob(f"{particularFolder}\\{particularName}.{iformat}")
         return enumerate(imagefiles)
 
 def main():
