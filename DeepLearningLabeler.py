@@ -10,7 +10,7 @@ from matplotlib.widgets import Button
 class manual_classifier(object):
 
     """The class uses only matplotlib functions to realize a convenient manual classification for images
-    that sit in the specified folder. It will copy the images to the desired image class folder (e.g. 
+    that sit in the specified folder. It will copy the images to the desired image class folder (e.g.
     class_1 and class_2)
 
     Input:
@@ -111,10 +111,16 @@ class manual_classifier(object):
 def main():
     try:
         path = Path(sys.argv[1])
-        pn = sys.argv[2]
-        pf = sys.argv[3]
     except IndexError:
         path = Path(r".\tiff_image")
+    try:
+        pn = sys.argv[2]
+    except IndexError:
+        pn = "*"
+    try:
+        pf = sys.argv[3]
+    except IndexError:
+        pf = "*"
 
     manual_classifier(path, pn, pf)
 
